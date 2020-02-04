@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet">
+    
+    <title>FEUP Exams</title>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>FEUP Exams</h1>
+        </div>
+    </header>
+
+    <section>
+        <div id="course-picker" class="container picker">
+            <h2>Please pick your course</h2>
+            <form action="#" method="get">
+                <div class="option">
+                    <label for="">Semester:</label>
+                    <select name="semester" id="semester">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                    </select>
+                </div>
+
+                <div class="option">
+                    <label for="">Course:</label>
+                    <select name="course-id" id="course-id">
+
+                    </select>
+                </div>
+
+                <br>
+                <input class = "button" type="submit" value="Confirm">
+            </form>
+        </div>
+    </section>
+
+    <section>
+        <div id="uc-picker" class="container picker" style="display: none">
+            <h2>Please pick your curricular units</h2>
+            <form action="#" method="get">
+                <div id = "uc-options">
+
+                </div>
+
+                <br>
+                <input class = "button" type="submit" value="Confirm">
+            </form>
+        </div>
+    </section>
+
+    <section>
+        <div id="exams" class="container" style="display: none">
+            <h2>Exams</h2>
+
+            <table id="exams-table" class="center">
+                <thead id="exams-header">
+                    <tr>
+                        <th>Acronym</th>
+                        <th>Day</th>
+                        <th>Weekday</th>
+                        <th>Start</th>
+                        <th>Finish</th>
+                        <th>Rooms</th>
+                    </tr>
+                </thead>
+                <tbody id="exams-data">
+
+                </tbody>
+            </table>
+            
+        </div>
+    </section>
+
+    <footer id="main-footer">
+        <div class="footer-container">
+            <p>
+                Made with 🖤 by <a href="https://github.com/dfamonteiro">Daniel Monteiro</a>
+            </p>
+        </div>
+
+        <div class="footer-container">
+            <p>
+                I'd like to thank the folks at <a href="https://ni.fe.up.pt/">NIAEFEUP</a> 
+                for providing a straightforward API for their 
+                <a href="https://ni.fe.up.pt/tts/">Timetable Selector tool</a>
+            </p>
+        </div>
+
+        <div class="footer-container">
+            <p>
+
+                The curricular units and exams are scraped with <a href="https://github.com/dfamonteiro/feupy">feupy</a>,
+                a Sigarra scraping library written in Python by <a href="https://github.com/dfamonteiro">yours truly</a>
+            </p>
+        </div>
+
+        <div class="footer-container">
+            <p>
+                This webpage is <b>NOT</b> an official source of information.
+                Please make sure you double-check the information provided here
+            </p>
+        </div>
+
+        <div class="footer-container">
+            <p>
+
+                This webpage's source code and associated scraping machinery can be found
+                <a href="https://github.com/dfamonteiro">here</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
