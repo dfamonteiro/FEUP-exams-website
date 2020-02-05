@@ -10,6 +10,9 @@ const ucPickerDiv  = document.querySelector("#uc-picker");
 const ucOptionsDiv = document.querySelector("#uc-options");
 const ucPickerForm = ucPickerDiv.querySelector("form");
 
+const warningDiv = document.querySelector("#warning");
+const warningText = document.querySelector("#warning-text");
+
 const examsDiv         = document.querySelector("#exams");
 const examsTableHeader = document.querySelector("#exams-header"); 
 const examsTableData   = document.querySelector("#exams-data");
@@ -189,11 +192,25 @@ function onUcSubmit(e) {
         }
     }
 
-    let uc_path = `data/courses/COURSE${courseInput.value}/EXAMS.json`;
+    let timestampPath = `data/timestamp.json`;
+    loadJson(timestampPath, verifyTimestamp);
+
+    let ucPath = `data/courses/COURSE${courseInput.value}/EXAMS.json`;
     examsDiv.style.display = "block";
-    loadJson(uc_path, loadExams);
+    loadJson(ucPath, loadExams);
 }
 ucPickerForm.addEventListener("submit", onUcSubmit);
+
+function verifyTimestamp(json) {
+    deltaDays = Math.floor(((Date.now() / 1000) - json.timestamp)/(24 * 60 * 60));
+
+    if (deltaDays > 3) {
+        warningText.innerHTML = `The information on this website is ${deltaDays} days old`;
+        warningDiv.style.display = "block";
+    } else {
+        warningDiv.style.display = "none";
+    }
+}
 
 function loadExams(json) {
     json.sort((item1, item2) => item1.start_timestamp - item2.start_timestamp);

@@ -98,6 +98,12 @@ h3 {
     width:90%;
 }
 
+#warning {
+    background-color: #EED202;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
 #exams {
     width: 100%;
 }
