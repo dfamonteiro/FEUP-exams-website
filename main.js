@@ -198,9 +198,17 @@ ucPickerForm.addEventListener("submit", onUcSubmit);
 function loadExams(json) {
     json.sort((item1, item2) => item1.start_timestamp - item2.start_timestamp);
 
+    let today = new Date();
+    today.setHours(0);
+    today.setMinutes(0);
+    today.setSeconds(0);
+    today.setMilliseconds(0); // I just want the date
+    
+    let todayTimestamp = today.getTime() / 1000;
+
     let output = '';
     for (let exam of json) {
-        if (checkedUcs.has(exam.pv_ocorrencia_id)) {
+        if (checkedUcs.has(exam.pv_ocorrencia_id) && (exam.start_timestamp > todayTimestamp)) {
             let acronym = ucIdMap.get(exam.pv_ocorrencia_id).acronym;
 
             let start   = new Date(exam.start_timestamp  * 1000);
