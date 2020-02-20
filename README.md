@@ -12,7 +12,7 @@
 1. Change your working directory to the root of this project in your computer
 2. Run this command
    ```
-   python3 update_data.py
+   python3 update_data.py -cue -vv
    ```
 3. Drink a glass of water (the update script takes 10 minutes, more or less (depends on the state of [feupy](https://github.com/dfamonteiro/feupy)'s cache))
 
