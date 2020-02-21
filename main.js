@@ -233,9 +233,10 @@ function loadExams(json) {
             
             let weekday    = getWeekday(start);
             let day        = start .toISOString().slice(-24, -14);
+            //https://stackoverflow.com/a/35890537
 
-            let startHour  = start .toISOString().slice(-13, -8); //https://stackoverflow.com/a/35890537
-            let finishHour = finish.toISOString().slice(-13, -8);
+            let startHour  = start .toString().slice(16, 21); 
+            let finishHour = finish.toString().slice(16, 21);
 
             let rooms      = exam.rooms.join(" ");
             
