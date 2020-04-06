@@ -103,7 +103,7 @@ def download_ucs_json(courses_folder_path : str, courses : list , verbosity: int
         for uc in curricular_units:
             trimmed_uc = {
                 "acronym"          : uc.acronym,
-                "curricular_year"  : uc.curricular_year,
+                "curricular_year"  : uc.curricular_years[0], # Not the best way to do this
                 "name"             : uc.name,
                 "pv_ocorrencia_id" : uc.pv_ocorrencia_id,
                 "semester"         : uc.semester,
