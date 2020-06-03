@@ -1,1 +1,1 @@
-[{"pv_ocorrencia_id": 440361, "start_timestamp": 1592474400.0, "finish_timestamp": 1592479800.0, "rooms": ["G106.A", "G106.B", "G306.A", "G306.B", "GA1", "GA2", "GAN"]}, {"pv_ocorrencia_id": 440361, "start_timestamp": 1594393200.0, "finish_timestamp": 1594398600.0, "rooms": ["G106.A", "G106.B", "G306.A", "G306.B", "GA1"]}]
+[{"pv_ocorrencia_id": 440361, "start_timestamp": 1592474400.0, "finish_timestamp": 1592479800.0, "rooms": []}, {"pv_ocorrencia_id": 440361, "start_timestamp": 1594393200.0, "finish_timestamp": 1594398600.0, "rooms": []}]
