@@ -6,6 +6,7 @@ import os
 from os import path
 from datetime import datetime
 from time import time
+from subprocess import run
 
 import feupy
 
@@ -168,7 +169,6 @@ def download_exams_json(courses_folder_path : str, courses : list , verbosity: i
         with open(course_path_exams, "w") as f:
             json.dump(trimmed_exams, f)
 
-
 def update_timestamp(timestamp_json_path : str, verbosity : int):
     if verbosity >= 1:
         print(f"Update complete! Saving timestamp to {timestamp_json_path}")
@@ -181,6 +181,15 @@ def update_timestamp(timestamp_json_path : str, verbosity : int):
     with open(timestamp_json_path, "w") as f:
         json.dump(timestamp, f)
 
+def commit_and_push():
+    run(["git", "status"])
+    run(["git", "stage", "data/*"])
+
+    run(["git", "status"])
+    run(["git", "commit", "-m", "Data update"])
+
+    run(["git", "status"])
+    run(["git", "push"])
 
 DIR_STRUCTURE = ["index.html", "css", "update_data.py", "main.js", "data"]
 WRONG_DIR_MESSAGE = "Please make sure that you are running this program in the correct directory"
@@ -197,6 +206,7 @@ if __name__ == "__main__":
     parser.add_argument("-c", "--update_courses", help="update the JSON course files", action="store_true")
     parser.add_argument("-u", "--update_ucs",     help="update the JSON uc files",     action="store_true")
     parser.add_argument("-e", "--update_exams",   help="update the JSON exams files",  action="store_true")
+    parser.add_argument("-g", "--git",            help="commit and push to the git repo",  action="store_true")
     parser.add_argument("-v", "--verbosity", action="count", default=0, help="Increases the verbosity")
     args   = parser.parse_args()
 
@@ -218,3 +228,6 @@ if __name__ == "__main__":
         download_exams_json(path.join("data", "courses"), courses, args.verbosity)
 
     update_timestamp(TIMESTAMP_PATH, args.verbosity)
+
+    if args.git:
+        commit_and_push()
