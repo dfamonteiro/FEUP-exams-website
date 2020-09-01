@@ -9,21 +9,34 @@ from time import time
 from subprocess import run
 
 import feupy
+import bs4
 
-def download_courses_json(ni_url : str, courses_folder_path : str, verbosity : int):
+def download_courses_json(url : str, courses_folder_path : str, verbosity : int):
     COURSES_JSON_PATH = path.join(courses_folder_path, "courses.json")
 
     if verbosity >= 1:
-        print(f"Downloading JSON from {ni_url}...")
+        print(f"Downloading JSON from {url}...")
 
-    courses_request = requests.get(ni_url)
-    courses = courses_request.json()
+    courses_html = requests.get(url)
+    soup = bs4.BeautifulSoup(courses_html.text, "lxml")
+
+    tags = soup.find("div", {"id" : "ciclos_estudos"}).find_all("a")
+    
+    courses_tags = filter(lambda tag: "cur_geral.cur_view" in str(tag) and "pv_tipo_cur_sigla=D" not in str(tag) and "Página Web" not in str(tag), tags)
+    
+    if verbosity >= 1:
+        print(f"Loading courses...")
+
+    courses = [feupy.Course.from_a_tag(tag) for tag in courses_tags]
+    courses.sort(key=lambda course: course.acronym)
+
+    courses_json = [{"course_id" : course.pv_curso_id, "acronym" : course.acronym} for course in courses]
 
     if verbosity >= 1:
         print(f"Saving to {COURSES_JSON_PATH}...")
 
     with open(COURSES_JSON_PATH, "w") as f:
-        json.dump(courses, f)
+        json.dump(courses_json, f)
 
     if verbosity >= 1:
         print()
@@ -160,7 +173,7 @@ def commit_and_push():
 
 DIR_STRUCTURE = ["index.html", "css", "update_data.py", "main.js", "data"]
 WRONG_DIR_MESSAGE = "Please make sure that you are running this program in the correct directory"
-NI_COURSES_URL = "https://ni.fe.up.pt/tts/api/faculties/8/courses"
+COURSES_URL = "https://sigarra.up.pt/feup/pt/cur_geral.cur_inicio"
 
 TIMESTAMP_PATH = path.join("data", "timestamp.json")
 
@@ -178,18 +191,18 @@ if __name__ == "__main__":
     args   = parser.parse_args()
 
     if args.update_courses:
-        download_courses_json(NI_COURSES_URL, "data", args.verbosity)
+        download_courses_json(COURSES_URL, "data", args.verbosity)
 
     if args.update_ucs:
         courses = []
-        with open(path.join("data", "mini_courses.json")) as json_file:
+        with open(path.join("data", "courses.json")) as json_file:
             courses = json.load(json_file)
 
         download_ucs_json(path.join("data", "courses"), courses, args.verbosity)
     
     if args.update_exams:
         courses = []
-        with open(path.join("data", "mini_courses.json")) as json_file:
+        with open(path.join("data", "courses.json")) as json_file:
             courses = json.load(json_file)
 
         download_exams_json(path.join("data", "courses"), courses, args.verbosity)
