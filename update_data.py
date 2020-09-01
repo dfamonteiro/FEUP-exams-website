@@ -11,9 +11,7 @@ from subprocess import run
 import feupy
 
 def download_courses_json(ni_url : str, courses_folder_path : str, verbosity : int):
-
     COURSES_JSON_PATH = path.join(courses_folder_path, "courses.json")
-    MINI_COURSES_JSON_PATH = path.join(courses_folder_path, "mini_courses.json")
 
     if verbosity >= 1:
         print(f"Downloading JSON from {ni_url}...")
@@ -21,44 +19,13 @@ def download_courses_json(ni_url : str, courses_folder_path : str, verbosity : i
     courses_request = requests.get(ni_url)
     courses = courses_request.json()
 
-
     if verbosity >= 1:
         print(f"Saving to {COURSES_JSON_PATH}...")
 
     with open(COURSES_JSON_PATH, "w") as f:
         json.dump(courses, f)
 
-    if verbosity >= 2:
-        print(f"Removing unnecessary fields...")
-
-    for course in courses:
-        # I can do this because dicts are passed by reference
-        keys = list(course.keys())
-        for key in keys:
-            if key not in ("course_id", "acronym"):
-                course.pop(key)
-
-    courses.sort(key=lambda item : item["acronym"]) # Sort alphabetically
-
-
     if verbosity >= 1:
-        print(f"Saving to {MINI_COURSES_JSON_PATH}...")
-
-    with open(MINI_COURSES_JSON_PATH, "w") as f:
-        json.dump(courses, f)
-
-    if verbosity >= 1:
-        print()
-
-
-    courses_json_size      = path.getsize(COURSES_JSON_PATH)
-    mini_courses_json_size = path.getsize(MINI_COURSES_JSON_PATH)
-    reduction_percentage   = 100 - (mini_courses_json_size/courses_json_size)*100
-    
-    if verbosity >= 2:
-        print(f"Size of {COURSES_JSON_PATH}: {courses_json_size}")
-        print(f"Size of {MINI_COURSES_JSON_PATH}: {mini_courses_json_size}")
-        print(f"Reduction of {round(reduction_percentage, 3)}% achieved")
         print()
 
 def download_ucs_json(courses_folder_path : str, courses : list , verbosity: int):
