@@ -1,1 +1,1 @@
-[{"pv_ocorrencia_id": 483890, "start_timestamp": 1653399000.0, "finish_timestamp": 1653406200.0, "rooms": []}, {"pv_ocorrencia_id": 483889, "start_timestamp": 1654003800.0, "finish_timestamp": 1654011000.0, "rooms": []}]
+[{"pv_ocorrencia_id": 483890, "start_timestamp": 1653399000.0, "finish_timestamp": 1653406200.0, "rooms": ["B221", "B231"]}, {"pv_ocorrencia_id": 483889, "start_timestamp": 1654003800.0, "finish_timestamp": 1654011000.0, "rooms": ["B104", "B208"]}]
